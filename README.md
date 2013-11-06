@@ -84,9 +84,9 @@ imageContainer.file('image1.jpg')							  // Upload a file to the container.
 Dependencies
 ------------
 
-* [http](https://github.com/jeffgrann/http) (tested with v1.0)
-* [httpRequests](https://github.com/jeffgrann/httpRequests) (tested with v1.0)
-* [mimeTypes](https://github.com/jeffgrann/mimeTypes) (tested with v1.0)
+* [http](https://github.com/jeffgrann/http) (tested with v1.0) - PROVIDED
+* [httpRequests](https://github.com/jeffgrann/httpRequests) (tested with v1.0) - PROVIDED
+* [mimeTypes](https://github.com/jeffgrann/mimeTypes) (tested with v1.0) - PROVIDED
 * [underscore](http://underscorejs.org) (tested with v1.5.1)
 * [Wakanda](http://www.wakanda.org) v6+ (tested with v6 build 6.144914)
 
