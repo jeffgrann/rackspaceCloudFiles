@@ -65,24 +65,22 @@ Object.freeze(RACKSPACE_DEFAULTS);
 //****************************************************************************************************
 // Private Module Functions
 //****************************************************************************************************
+
+//****************************************************************************************************
+// Account constructor
+//****************************************************************************************************
 Account = function Account (username, apiKey, accountLocation) {	
 	this.username = username;
 	this.apiKey = apiKey;
 	this.accountLocation = typeof accountLocation === 'string' && ACCOUNT_LOCATIONS.hasOwnProperty(accountLocation) ? accountLocation : ACCOUNT_LOCATIONS.US;
 };
 
-extractCustomMetaData = function extractCustomMetaData (object, metaDataPrefix) {
-	var result;
-	
-	result = _.chain(_.pairs(object)) 														// Get an array containing arrays of the object's key/value pairs [[k1,v1], [k2,v2]].
-		   	.filter(function (pair) {return pair[0].indexOf(metaDataPrefix) === 0;}) 		// Remove pairs with keys that don't have the container meta prefix.
-		   	.map(function (pair) {return [pair[0].replace(metaDataPrefix, ''), pair[1]];}) 	// Remove the container meta prefix from the keys.
-		   	.object() 																		// Turn the array of key/value pairs into an object.
-		   	.value();
-		   	
-	return result;
-};
-
+//****************************************************************************************************
+// authenticate
+//****************************************************************************************************
+// Attempt to log into the rackspace CloudFiles service and, if successful, save the returned
+// information in the given account object. 
+//----------------------------------------------------------------------------------------------------
 authenticate = function authenticate (account) {
 	var url;
 	var xhr;
@@ -115,6 +113,9 @@ authenticate = function authenticate (account) {
 	return account;
 };
 
+//****************************************************************************************************
+// Container constructor
+//****************************************************************************************************
 Container = function Container (account, name) {
 	if (name.indexOf('/') >= 0) {
 		throw new Error("Could not create a rackspace container object with a name of '" + containerName + "'. Container names cannot contain forward slash characters.");
@@ -126,6 +127,19 @@ Container = function Container (account, name) {
 	this._fullPath = this._account._storageUrl + "/" + this._encodedName;
 };
 
+//****************************************************************************************************
+// ContainerFile constructor
+//****************************************************************************************************
+ContainerFile = function ContainerFile (container, fileName) {
+	this._container = container;
+	this._fileName = fileName;
+	this._encodedFileName = encodeURIComponent(this._fileName);
+	this._fullPath = this._container._fullPath + '/' + this._encodedFileName;
+};
+
+//****************************************************************************************************
+// ContainerList constructor
+//****************************************************************************************************
 ContainerList = function ContainerList (account, batchLimit) {
 	batchLimit = _.isNumber(batchLimit) && batchLimit > 0 && batchLimit <= RACKSPACE_DEFAULTS.RETRIEVAL_BATCH_LIMIT ? batchLimit : RACKSPACE_DEFAULTS.RETRIEVAL_BATCH_LIMIT;
 	
@@ -134,6 +148,42 @@ ContainerList = function ContainerList (account, batchLimit) {
 	this._batchLimit = batchLimit;
 };
 
+//****************************************************************************************************
+// extractCustomMetaData
+//****************************************************************************************************
+// Return a copy of the given object, filtered to only have values for the keys that begin with the
+// given metaDataPrefix while removing the metaDataPrefix from the key names.
+//----------------------------------------------------------------------------------------------------
+extractCustomMetaData = function extractCustomMetaData (object, metaDataPrefix) {
+	var result;
+	
+	result = _.chain(_.pairs(object)) 														// Get an array containing arrays of the object's key/value pairs [[k1,v1], [k2,v2]].
+		   	.filter(function (pair) {return pair[0].indexOf(metaDataPrefix) === 0;}) 		// Remove pairs with keys that don't have the container meta prefix.
+		   	.map(function (pair) {return [pair[0].replace(metaDataPrefix, ''), pair[1]];}) 	// Remove the container meta prefix from the keys.
+		   	.object() 																		// Turn the array of key/value pairs into an object.
+		   	.value();
+		   	
+	return result;
+};
+
+//****************************************************************************************************
+// FileList constructor
+//****************************************************************************************************
+FileList = function FileList (container, batchLimit) {
+	batchLimit = _.isNumber(batchLimit) && batchLimit > 0 && batchLimit <= RACKSPACE_DEFAULTS.RETRIEVAL_BATCH_LIMIT ? batchLimit : RACKSPACE_DEFAULTS.RETRIEVAL_BATCH_LIMIT;
+	
+	this._container = container;
+	this._list = null;
+	this._batchLimit = batchLimit;
+};
+
+//****************************************************************************************************
+// getAccountContainerList
+//****************************************************************************************************
+// Returns a list of no more than the given batchLimit of containers for the given account starting at
+// the given optional marker. The marker is the name of a container. If the marker is not specified,
+// starts at the beginning of the containers. 
+//----------------------------------------------------------------------------------------------------
 getAccountContainerList = function getAccountContainerList (account, batchLimit, marker) {
 	var result;
 	var xhr;
@@ -154,6 +204,11 @@ getAccountContainerList = function getAccountContainerList (account, batchLimit,
 	return result;
 };
 
+//****************************************************************************************************
+// getContainerCdnMetaData
+//****************************************************************************************************
+// Adds the CDN meta data to the given container.
+//----------------------------------------------------------------------------------------------------
 getContainerCdnMetaData = function getContainerCdnMetaData (container) {
 	var xhr;
 	
@@ -170,14 +225,13 @@ getContainerCdnMetaData = function getContainerCdnMetaData (container) {
 	container._cdniOSUri = xhr.getResponseHeader(HEADER.X_CDN_IOS_URI);
 };
 
-FileList = function FileList (container, batchLimit) {
-	batchLimit = _.isNumber(batchLimit) && batchLimit > 0 && batchLimit <= RACKSPACE_DEFAULTS.RETRIEVAL_BATCH_LIMIT ? batchLimit : RACKSPACE_DEFAULTS.RETRIEVAL_BATCH_LIMIT;
-	
-	this._container = container;
-	this._list = null;
-	this._batchLimit = batchLimit;
-};
-
+//****************************************************************************************************
+// getContainerFileList
+//****************************************************************************************************
+// Returns a list of no more than the given batchLimit of files in the given container starting at 
+// the given optional marker. The marker is the name of a file. If the marker is not specified, 
+// starts at the beginning of the container's files. 
+//----------------------------------------------------------------------------------------------------
 getContainerFileList = function getContainerFileList (container, batchLimit, marker) {
 	var result;
 	var xhr;
@@ -196,13 +250,6 @@ getContainerFileList = function getContainerFileList (container, batchLimit, mar
 	}
 
 	return result;
-};
-
-ContainerFile = function ContainerFile (container, fileName) {
-	this._container = container;
-	this._fileName = fileName;
-	this._encodedFileName = encodeURIComponent(this._fileName);
-	this._fullPath = this._container._fullPath + '/' + this._encodedFileName;
 };
 
 //****************************************************************************************************

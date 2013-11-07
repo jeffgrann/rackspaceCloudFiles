@@ -1,6 +1,6 @@
 {
     "name": "rackspaceCloudFiles",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Provides a javascript interface to the rackspace CloudFiles API.",
     "main": "./WakandaProject/CloudFiles/Modules/rackspaceCloudFiles.js",
     "keywords": [

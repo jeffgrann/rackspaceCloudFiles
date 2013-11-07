@@ -1,6 +1,6 @@
 
-rackspaceCloudFiles v1.0 
-========================
+rackspaceCloudFiles v1.0.1
+==========================
 
 rackspaceCloudFiles is a [Wakanda](http://www.wakanda.org) [CommonJS](http://www.commonjs.org)
 module which provides a javascript interface to the [rackspace](http://www.rackspace.com) 
