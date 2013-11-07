@@ -1,0 +1,63 @@
+{
+    "name": "rackspaceCloudFiles",
+    "version": "1.0.0",
+    "description": "Provides a javascript interface to the rackspace CloudFiles API.",
+    "main": "./WakandaProject/CloudFiles/Modules/rackspaceCloudFiles.js",
+    "keywords": [
+        "wakanda",
+        "javascript",
+        "rackspace",
+        "CloudFiles",
+        "cloud",
+        "storage"
+        ],
+    "author": {
+        "name": "Jeff Grann",
+        "web": "https://github.com/jeffgrann"
+    },
+    "maintainers": [
+        {
+        "name": "Jeff Grann",
+        "web": "https://github.com/jeffgrann"
+    }
+    ],
+    "contributors": [
+        ],
+    "bugs": {
+        "web": "https://github.com/jeffgrann/rackspaceCloudFiles/issues"
+    },
+    "licenses": [
+        {
+        "type": "MIT",
+        "url": "https://github.com/jeffgrann/rackspaceCloudFiles/blob/master/LICENSE"
+    }
+    ],
+    "repositories": [
+        {
+        "type": "git",
+        "url": "https://github.com/jeffgrann/rackspaceCloudFiles"
+    }
+    ],
+    "dependencies": {
+        "http": {
+            "url": "httpRequestss://github.com/jeffgrann/http",
+            "version": "1.0"
+        },
+        "httpRequests": {
+            "url": "httpRequestss://github.com/jeffgrann/httpRequests",
+            "version": "1.0"
+        },
+        "mimeTypes": {
+            "url": "httpRequestss://github.com/jeffgrann/mimeTypes",
+            "version": "1.0"
+        },
+        "underscore": {
+            "url": "http://underscorejs.org",
+            "version": "1.5.1"
+        },
+        "wakanda": "6.146205"
+    },
+    "os": ["linux", "macos", "win"],
+    "engines": ["wakanda"
+                          ]
+}
