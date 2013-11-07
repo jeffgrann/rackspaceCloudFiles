@@ -23,9 +23,6 @@ function (cloudFiles, _) {
 	//userName = 'Your User Name Here';
 	//apiKey = 'Your rackspace API Key Here';
 	//accountLocation = cloudFiles.ACCOUNT_LOCATIONS.US; // Your account location here.
-	userName = 'jeffgrann';
-	apiKey = 'd43523965640257ec174c5121688501c';
-	accountLocation = cloudFiles.ACCOUNT_LOCATIONS.US;
 	//**********************************************************************
 
 	//----------------------------------------------------------------------------------------------------
