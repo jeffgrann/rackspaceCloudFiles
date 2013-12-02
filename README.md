@@ -1,5 +1,5 @@
 
-rackspaceCloudFiles v1.0.1
+rackspaceCloudFiles v1.0.2
 ==========================
 
 rackspaceCloudFiles is a [Wakanda](http://www.wakanda.org) [CommonJS](http://www.commonjs.org)
@@ -10,6 +10,7 @@ module which provides a javascript interface to the [rackspace](http://www.racks
 Contents
 --------
 * [Example](#EXAMPLE)
+* [Installation](#INSTALLATION)
 * [Dependencies](#DEPENDENCIES)
 * [Constants](#CONSTANTS)
     * [ACCOUNT\_LOCATIONS](#ACCOUNT_LOCATIONS)
@@ -80,13 +81,19 @@ imageContainer.file('image1.jpg')							  // Upload a file to the container.
               .upload(File(ds.getModelFolder().path + 'testFiles/image1.jpg'));
 ```
 
+<a id="INSTALLATION"></a>
+Installation
+------------
+Simply create a folder named `Modules` in your Wakanda project and copy `rackspaceCloudFiles.js`
+and the other necessary module files (see [Dependencies](#DEPENDENCIES)) into it. 
+
 <a id="DEPENDENCIES"></a>
 Dependencies
 ------------
 
-* [http](https://github.com/jeffgrann/http) (tested with v1.0) - PROVIDED
-* [httpRequests](https://github.com/jeffgrann/httpRequests) (tested with v1.0) - PROVIDED
-* [mimeTypes](https://github.com/jeffgrann/mimeTypes) (tested with v1.0) - PROVIDED
+* [http](https://github.com/jeffgrann/http) (tested with v1.0)
+* [httpRequests](https://github.com/jeffgrann/httpRequests) (tested with v1.0)
+* [mimeTypes](https://github.com/jeffgrann/mimeTypes) (tested with v1.0)
 * [underscore](http://underscorejs.org) (tested with v1.5.1)
 * [Wakanda](http://www.wakanda.org) v6+ (tested with v6 build 6.144914)
 
@@ -986,15 +993,18 @@ time. They are commented out until this isssue is resolved.
 <a id="TESTING"></a>
 Testing
 -------
-rackspaceCloudFiles uses Wakanda's implementation of [YUI
+rackspaceCloudFiles uses Wakanda's implementation of [YUI 
 Test](http://yuilibrary.com/yui/docs/test/). 
 
 **WARNING:** The test code creates 5 rackspace containers in your account named "test1" through
 "test5" and deletes them. If you have any real containers with any of these names, please rename
 them before running the test or do not run the test. Otherwise they will be deleted. 
 
-1. In Wakanda Studio, open Modules/testCases.js in the CloudFiles project.
-2. Enter your rackspace account information into the following three lines of code toward the top
+1. Copy the `testFiles` folder into your Wakanda project. This folder contains files to be uplodaded
+during the tests. 
+2. Copy `testCases.js` into the `Modules` folder in your Wakanda project.
+3. In Wakanda Studio, open `Modules/testCases.js`.
+4. Enter your rackspace account information into the following three lines of code toward the top
 of the file:  
 
     ```javascript
@@ -1005,15 +1015,17 @@ of the file:
     //**********************************************************************
     ```
 
-3. Open scripts/test.js.
-4. Click Run File. The results should appear in your browser.
+5. Create a `scripts` folder in your Wakanda project and copy `test.js` into it.
+6. Open `scripts/test.js`.
+7. Click Run File. Doing so will create a `testResults.html` file in the scripts folder. The
+results should appear in your browser automatically. If they do not, open the `testResults.html`
+file. 
 
 <a id="CONTRIBUTIONS"></a>
 Contributions
 -------------
-If you contribute to this library, just modify `Modules/rackspaceCloudFiles.js` and
-`Modules/testCases.js` and send a pull request. Please remember to update the markdown if the public
-interface changes. 
+If you contribute to this library, just modify `rackspaceCloudFiles.js` and `testCases.js` and
+send a pull request. Please remember to update the markdown if the public interface changes. 
 
 <a id="LICENSE"></a>
 License
